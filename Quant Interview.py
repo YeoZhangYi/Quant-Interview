@@ -61,8 +61,8 @@ df['log_return'] = df['total'].pct_change().apply(lambda x: np.log(1+x))
 ## Assumption: The Var95 and CVaR95 are in log returns terms.
 VaR95 = df['log_return'].quantile(0.05)
 CVaR95 = sum(filter(lambda x: x<VaR95, df['log_return']))/(len(df)*0.05)
-print(VaR95)
-print(CVaR95)
+print(VaR95) #-0.016694283935572048
+print(CVaR95) #-0.025912370929775136
 
 ## Part b ##
 ## Calculate 1d Var in 2016 using parametric method
@@ -76,8 +76,8 @@ port_stdev = np.sqrt(weights.T.dot(cov_matrix).dot(weights))
  
 VaR95 = norm.ppf(0.05, port_mean, port_stdev)
 CVaR95 = sum(filter(lambda x: x<VaR95, df['log_return']))/(len(df)*0.05)
-print(VaR95)
-print(CVaR95)
+print(VaR95) #-0.014322120365119826
+print(CVaR95) #-0.03327831136879175
 
 ## Part c ##
 ## Rebalancing portfolio monthly by maximising the sharpe ratio of daily log returns for the previous month
@@ -128,6 +128,19 @@ for month in range(1, 13):
 monthly_end_weights = pd.DataFrame(monthly_weights)
 monthly_end_weights.index = months
 print(monthly_end_weights)
+##             AAPL           IBM  ...          COST            GS
+## 1  -0.000000e+00 -4.715284e+15  ... -0.000000e+00 -6.287046e+15
+## 2  2.666667e+00  3.000000e+00  ...  1.000000e+00 -1.000000e+00
+## 3   3.888889e-01  5.000000e-01  ...  3.333333e-01 -1.111111e-01
+## 4  -4.149374e+15 -8.298747e+14  ... -6.638998e+15  1.659749e+15
+## 5   4.285714e-01  3.571429e-01  ... -1.428571e-01 -2.857143e-01
+## 6  -2.000000e+00 -0.000000e+00  ...  1.000000e+00 -1.500000e+00
+## 7   2.000000e-01  9.000000e-01  ...  1.000000e-01 -0.000000e+00
+## 8   2.000000e+00 -2.000000e+00  ... -2.000000e+00  5.000000e+00
+## 9   5.000000e+00 -5.000000e+00  ... -6.000000e+00 -6.000000e+00
+## 10  5.000000e+00 -1.000000e+00  ... -5.000000e+00  9.000000e+00
+## 11  1.000000e+00  0.000000e+00  ... -8.333333e-01  1.333333e+00
+## 12  5.454545e-01 -2.727273e-01  ... -0.000000e+00  2.727273e-01
 
 ## Question 5 ##
 brew install cloc 
